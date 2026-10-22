@@ -1,0 +1,16 @@
+3D STUNT PILOT - WEBSITE UPLOAD PACKAGE
+
+1. Upload index.html and the complete game-files folder from the parent website-upload folder to a folder on your website, for example /games/stunt-pilot/.
+2. Open https://YOUR-DOMAIN/games/stunt-pilot/index.html (replace YOUR-DOMAIN and folder with yours).
+3. Keep index.html alongside game-files/. All runtime files, textures, scripts and game.swf live inside game-files/. Preserve its subfolders.
+
+This is a static website package. No Node.js, Java, database, localhost server, or CDN is required on your website. Serve it over HTTP or HTTPS; double-clicking index.html as a local file is not supported. Host .wasm files with Content-Type: application/wasm.
+
+For an existing website page, embed the hosted game using:
+<iframe src="/games/stunt-pilot/index.html" width="960" height="540" allowfullscreen style="border:0" title="3D Stunt Pilot"></iframe>
+Adjust the src path to your upload location.
+
+Requires browser WebGL and JavaScript. This package uses both Flash game logic and browser GPU rendering; uploading game.swf alone will not enable GPU rendering. Online scores are unavailable. Original game by FreeOnlineGames; Ruffle license files are included in game-files/ruffle/.
+
+DISPLAY SIZE
+Default game viewport: 960 x 540 (16:9), automatically reduced on narrow pages. Use F11 in desktop browsers to fill the screen. HUD and menus adapt to the viewport. The page shows only the game. F11 toggles game fullscreen, and Escape exits it. Keep allowfullscreen on an embedding iframe to permit fullscreen.

@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('fs'),path=require('path'),{spawnSync}=require('child_process');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'build/website-upload');
+const files=path.join(out,'game-files');fs.mkdirSync(files,{recursive:true});
+for(const [source,dest]of [['player/gpu','gpu'],['player/ruffle-0.7.1','ruffle'],['player/viewport.js','viewport.js'],['player/preloader.js','preloader.js'],['build/stunt-pilot-gpu.swf','game.swf'],['docs/UPLOAD-INSTRUCTIONS.txt','UPLOAD-INSTRUCTIONS.txt']])fs.cpSync(path.join(root,source),path.join(files,dest),{recursive:true});
+const html=fs.readFileSync(path.join(root,'player/recovered.html'),'utf8').replaceAll('/player/ruffle-0.7.1/','./game-files/ruffle/').replaceAll('/player/','./game-files/').replaceAll('/build/stunt-pilot-gpu.swf','./game-files/game.swf');
+fs.writeFileSync(path.join(out,'index.html'),html);
+const renderer=fs.readFileSync(path.join(root,'player/gpu/renderer.js'),'utf8').replaceAll('/player/gpu/','./game-files/gpu/');
+fs.writeFileSync(path.join(files,'gpu/renderer.js'),renderer);
+const command="Add-Type -AssemblyName System.IO.Compression.FileSystem; [IO.File]::Delete([IO.Path]::GetFullPath('build/stunt-pilot-website.zip')); [IO.Compression.ZipFile]::CreateFromDirectory([IO.Path]::GetFullPath('build/website-upload'),[IO.Path]::GetFullPath('build/stunt-pilot-website.zip'))";
+const result=spawnSync('powershell.exe',['-NoProfile','-Command',command],{cwd:root,encoding:'utf8',windowsHide:true});
+if(result.error||result.status!==0)throw result.error||Error(result.stderr||'ZIP creation failed');
+console.log('Website folder and ZIP ready.');

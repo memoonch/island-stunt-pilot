@@ -1,0 +1,78 @@
+package jiglib.collision
+{
+   import flash.geom.Vector3D;
+   import jiglib.cof.JConfig;
+   import jiglib.data.TerrainData;
+   import jiglib.geometry.JBox;
+   import jiglib.geometry.JTerrain;
+   import jiglib.physics.MaterialProperties;
+   import jiglib.physics.RigidBody;
+   
+   public class CollDetectBoxTerrain extends CollDetectFunctor
+   {
+      
+      public function CollDetectBoxTerrain()
+      {
+         super();
+         name = "BoxTerrain";
+         type0 = "BOX";
+         type1 = "TERRAIN";
+      }
+      
+      override public function collDetect(info:CollDetectInfo, collArr:Vector.<CollisionInfo>) : void
+      {
+         var tempBody:RigidBody = null;
+         var obj:TerrainData = null;
+         var dist:Number = NaN;
+         var newPt:Vector3D = null;
+         var oldPt:Vector3D = null;
+         var cpInfo:CollPointInfo = null;
+         var collInfo:CollisionInfo = null;
+         var mat:MaterialProperties = null;
+         if(info.body0.type == "TERRAIN")
+         {
+            tempBody = info.body0;
+            info.body0 = info.body1;
+            info.body1 = tempBody;
+         }
+         var box:JBox = info.body0 as JBox;
+         var terrain:JTerrain = info.body1 as JTerrain;
+         var oldPts:Vector.<Vector3D> = box.getCornerPoints(box.oldState);
+         var newPts:Vector.<Vector3D> = box.getCornerPoints(box.currentState);
+         var collNormal:Vector3D = new Vector3D();
+         var collPts:Vector.<CollPointInfo> = new Vector.<CollPointInfo>();
+         for(var i:int = 0; i < 8; i++)
+         {
+            newPt = newPts[i];
+            obj = terrain.getHeightAndNormalByPoint(newPt);
+            if(obj.height < JConfig.collToll)
+            {
+               oldPt = oldPts[i];
+               dist = terrain.getHeightByPoint(oldPt);
+               collNormal = collNormal.add(obj.normal);
+               cpInfo = new CollPointInfo();
+               cpInfo.r0 = oldPt.subtract(box.oldState.position);
+               cpInfo.r1 = oldPt.subtract(terrain.oldState.position);
+               cpInfo.initialPenetration = -dist;
+               collPts.push(cpInfo);
+            }
+         }
+         if(collPts.length > 0)
+         {
+            collNormal.normalize();
+            collInfo = new CollisionInfo();
+            collInfo.objInfo = info;
+            collInfo.dirToBody = collNormal;
+            collInfo.pointInfo = collPts;
+            mat = new MaterialProperties();
+            mat.restitution = Math.sqrt(box.material.restitution * terrain.material.restitution);
+            mat.friction = Math.sqrt(box.material.friction * terrain.material.friction);
+            collInfo.mat = mat;
+            collArr.push(collInfo);
+            info.body0.collisions.push(collInfo);
+            info.body1.collisions.push(collInfo);
+         }
+      }
+   }
+}
+
