@@ -51,3 +51,27 @@ Upload `index.html` and the entire `game-files` folder together. The generated u
 Use `Restore-Original-Plane.cmd` / `Use-Enhanced-Plane.cmd` and `Restore-Original-Checkpoints.cmd` / `Use-Enhanced-Checkpoints.cmd`, then refresh. These update the GPU manifest and rebuild the website package. Original texture files are preserved. They do not revert UI or gameplay fixes.
 
 Original game by FreeOnlineGames. Ruffle and FFDec retain their included licenses. Keep their license files with redistributed tools/runtime. This snapshot does not include Java or Node.js installers.
+
+Mouse boost update (2026-10-22): in Mouse Control mode, holding the mouse button activates boost and its existing white smoke trails; releasing restores normal thrust. Shift is no longer required in mouse mode. Keyboard-mode click behavior and Space boost are unchanged. Loader tips updated. SWF rebuilt successfully; live browser verification was unavailable in this session.
+
+
+Input refinement (2026-10-22): mouse clicks affect plane smoke/boost only in Mouse Control mode. In Keyboard Control mode use Space for boost/smoke and Tab for manual smoke. Escape opens pause instead of returning to the main menu. Resume continues the current level.
+
+
+Escape also resumes when pressed on the pause screen (2026-10-22).
+
+
+Crash feedback (2026-10-22): Retry/Game Over panel appears 1.5 seconds after a crash, allowing the crash scene to remain visible first. Successful-level Continue timing is unchanged.
+
+
+Completion feedback (2026-10-22): Level Complete and Adventure Complete now also appear after a 1.5-second delay, matching the crash result delay.
+
+
+Result shortcut (2026-10-22): once a result panel appears, press Space or click its button. Space retries a failed level, continues a completed level, or performs the displayed final/Game Over action. Release and press again if Space was held for boost; automatic key-repeat cannot skip results.
+
+
+Level Complete now appears after 0.5 seconds; crash/Game Over and final completion remain at 1.5 seconds (2026-10-22).
+
+
+Current result layout (2026-10-22): all result panels appear after 1.5 seconds. Retry/Game Over and completion panels are 20% smaller and remain centered; Pause is unchanged.
+

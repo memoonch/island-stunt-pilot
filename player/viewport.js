@@ -17,8 +17,7 @@
       const action=document.fullscreenElement?document.exitFullscreen():game.requestFullscreen();
       Promise.resolve(action).then(update).catch(error=>console.warn('Fullscreen request failed',error));
     }else if(event.key==='Escape' && document.fullscreenElement){
-      event.preventDefault();
-      event.stopImmediatePropagation();
+      // Also let the game receive Escape so it opens its pause screen.
       document.exitFullscreen().then(update).catch(error=>console.warn('Fullscreen exit failed',error));
     }
   },true);

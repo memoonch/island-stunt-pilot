@@ -2,7 +2,7 @@
 # No runtime font dependency or bitmap scaling is used by the game buttons.
 Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference = 'Stop'
-$labels = @('PLAY','PLAY MORE GAMES','MOUSE CONTROL','KEYBOARD CONTROL','INVERT Y AXIS: OFF','INVERT Y AXIS: ON','INVERT Y AXIS','ON','OFF','RESUME','RETRY','BACK TO MENU','CONTINUE','PAUSED','LEVEL COMPLETE','TRY AGAIN','GAME OVER','ADVENTURE COMPLETE','TIME','TOTAL TIME','AVERAGE TIME','0','1','2','3','4','5','6','7','8','9',':','.')
+$labels = @('PLAY','PLAY MORE GAMES','MOUSE CONTROL','KEYBOARD CONTROL','INVERT Y AXIS: OFF','INVERT Y AXIS: ON','INVERT Y AXIS','ON','OFF','RESUME','RETRY','BACK TO MENU','CONTINUE','PRESS SPACE OR CLICK','PAUSED','LEVEL COMPLETE','TRY AGAIN','GAME OVER','ADVENTURE COMPLETE','TIME','TOTAL TIME','AVERAGE TIME','0','1','2','3','4','5','6','7','8','9',':','.')
 $culture = [Globalization.CultureInfo]::InvariantCulture
 function Num([double]$v) { $v.ToString('0.###',$culture) }
 $entries = @()

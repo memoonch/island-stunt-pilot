@@ -220,11 +220,11 @@ package
          }
       }
       
-      public function onMouseUpDown(e:MouseEvent) : void
+      public function onMouseUpDown(e:MouseEvent,boostOnClick:Boolean = false) : void
       {
          if(e.buttonDown)
          {
-            if(e.shiftKey)
+            if(e.shiftKey || boostOnClick)
             {
                this._motorForce = this.BOOST_FORCE;
             }
